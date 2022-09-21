@@ -38,6 +38,8 @@ epoch = 10
 for i in range(epoch):
     for imgs, targets in load_train:
         # train
+        # origin shape: [100, 1, 28, 28]
+        # resized: [100, 784]
         imgs = torch.reshape(imgs, shape=[-1, 28*28]).to(device)
         targets = targets.to(device)
         output = model(imgs)
@@ -62,6 +64,8 @@ with torch.no_grad():
         total_test_loss += loss
 
         # acc
+        # max函数返回两个值 第一个值是values，第二个是对应的indices
+        # max returns (value ,index)
         _, prediction = torch.max(output, dim=1)
         acc += (prediction == targets).sum().item()
 
